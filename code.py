@@ -8,7 +8,7 @@ import math
 pixel_pin = board.D10
 num_pixels = 166
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.3, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.5, auto_write=False)
 
 RED = (255, 0, 0)
 ORANGE = (255, 127, 0)
@@ -23,7 +23,7 @@ BLACK = (0, 0, 0)
 
 colors = [RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, MAGENTA]
 
-def main():
+def snake():
     while True:
         for j in range(160):
             setRange(j, (j+20)%160, RED)
@@ -35,23 +35,9 @@ def main():
             setRange((j+120)%160, (j+140)%160, PURPLE)
             setRange((j+140)%160, (j+160)%160, MAGENTA)
             pixels.show()
-            time.sleep(0.02)
+            time.sleep(0.01)
 
-def testing2():
-    while True:
-        for j in range(160):
-            setRange(j, (j+20)%160, RED)
-            setRange((j+20)%160, (j+40)%160, ORANGE)
-            setRange((j+40)%160, (j+60)%160, YELLOW)
-            setRange((j+60)%160, (j+80)%160, GREEN)
-            setRange((j+80)%160, (j+100)%160, CYAN)
-            setRange((j+100)%160, (j+120)%160, BLUE)
-            setRange((j+120)%160, (j+140)%160, PURPLE)
-            setRange((j+140)%160, (j+160)%160, MAGENTA)
-            pixels.show()
-            time.sleep(0.02)
-
-def testing():
+def fade():
     pixels.fill(RED)
     while True:
         for i in range(1530):
@@ -76,6 +62,53 @@ def testing():
             #print(newColor)
             pixels.show()
 
+def switch(rate, type):
+    nextColor = random.choice(colors)
+    while True:
+        if type == 'random':
+            thisColor = nextColor
+            pixels.fill(thisColor)
+            pixels.show()
+            time.sleep(1/rate)
+            nextColor = random.choice(colors)
+            while nextColor == thisColor:
+                nextColor = random.choice(colors)
+        else:
+            for color in colors:
+                pixels.fill(color)
+                pixels.show()
+                time.sleep(1/rate)
+
+def flash(rate, color):
+    while True:
+        if color == 'random':
+            for i in range(2):
+                if i == 0:
+                  pixels.fill(random.choice(colors))
+                else:
+                    pixels.fill(BLACK)
+                pixels.show()
+                time.sleep(1/rate)
+        else:
+            for i in range(2):
+                if i == 0:
+                  pixels.fill(color)
+                else:
+                    pixels.fill(BLACK)
+                pixels.show()
+                time.sleep(1/rate/2)
+
+def demogorgon():
+    while True:
+        for i in range(2):
+            if i == 0:
+                pixels.fill(WHITE)
+                time.sleep(random.random()*0.15)
+            else:
+                pixels.fill(BLACK)
+                time.sleep(random.random()*0.15)
+            pixels.show()
+
 def setRange(start, end, color):
     if start < end:
         for i in range(start, end):
@@ -89,4 +122,4 @@ def setRange(start, end, color):
         pixels[start] = color
 
 if __name__ == "__main__":
-    testing()
+    switch(1, 'random')
