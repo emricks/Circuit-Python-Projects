@@ -8,7 +8,7 @@ import math
 pixel_pin = board.D10
 num_pixels = 166
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.5, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=1, auto_write=False)
 
 RED = (255, 0, 0)
 ORANGE = (255, 127, 0)
@@ -23,7 +23,7 @@ BLACK = (0, 0, 0)
 
 colors = [RED, ORANGE, YELLOW, GREEN, CYAN, BLUE, PURPLE, MAGENTA]
 
-def snake():
+def snake(speed):
     while True:
         for j in range(160):
             setRange(j, (j+20)%160, RED)
@@ -35,12 +35,14 @@ def snake():
             setRange((j+120)%160, (j+140)%160, PURPLE)
             setRange((j+140)%160, (j+160)%160, MAGENTA)
             pixels.show()
-            time.sleep(0.01)
+            time.sleep(0.0625-0.0625*speed/100)
 
-def fade():
+def fade(speed):
     pixels.fill(RED)
     while True:
-        for i in range(1530):
+        for i in range(1531):
+            if speed > 20:
+                i = round(i/speed*100)
             if i < 256:
                 newColor = (255, i, 0)
                 pixels.fill(newColor)
@@ -59,8 +61,10 @@ def fade():
             elif i >= 1276 and i < 1531:
                 newColor = (255, 0, 255-(i-1275))
                 pixels.fill(newColor)
-            #print(newColor)
             pixels.show()
+            if speed < 20:
+                time.sleep(20/speed/200)
+
 
 def switch(rate, type):
     nextColor = random.choice(colors)
@@ -109,6 +113,11 @@ def demogorgon():
                 time.sleep(random.random()*0.15)
             pixels.show()
 
+def solid(color):
+    while True:
+        pixels.fill(color)
+        pixels.show()
+
 def setRange(start, end, color):
     if start < end:
         for i in range(start, end):
@@ -122,4 +131,4 @@ def setRange(start, end, color):
         pixels[start] = color
 
 if __name__ == "__main__":
-    switch(1, 'random')
+    fade(20)
