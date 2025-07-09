@@ -19,7 +19,7 @@ def main():
 pixel_pin = board.D10
 num_pixels = 166
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.3, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.1, auto_write=False)
 
 RED = (255, 0, 0)
 darkred = (80, 0, 0)
@@ -463,7 +463,7 @@ def swap(color, color2, rate):
         pixels.show()
         time.sleep(1)
 
-def cycle2(length):
+def cycle2(length, speed):
     colorArray = []
     for i in range(round(1531*length/100)):
         i *= 100/length
@@ -488,6 +488,7 @@ def cycle2(length):
                     pixels.fill(BLACK)
                     pixels.show()
             pixels.show()
+            time.sleep(1/speed/2)
 
 
 def setRange(start, end, color):
@@ -503,7 +504,7 @@ def setRange(start, end, color):
         pixels[start] = color
 
 if __name__ == "__main__":
-   cycle2(10)
+   solid(RED)
 
 # GUIDE:
 
