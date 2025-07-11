@@ -9,8 +9,9 @@
   <button onclick="sendRequestClear()">Clear</button>
 
   <script>
+    server = "http://10.10.10.207:8080"
     function sendRequestBlink(color, speed) {
-      fetch('/leds/animate/blink_fill', {
+      fetch(server + '/leds/animate/blink_fill', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ color, speed })
@@ -18,7 +19,7 @@
     }
 
     function sendRequestClear() {
-      fetch('/leds/animate/none', {
+      fetch(server + '/leds/animate/none', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: "{}"

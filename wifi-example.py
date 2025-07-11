@@ -9,7 +9,7 @@ import wifi
 from asyncio import sleep as async_sleep
 from asyncio import run, gather, create_task
 
-from adafruit_httpserver import POST, Request, Server
+from adafruit_httpserver import POST, OPTIONS, Request, Server, Response, Headers
 import animate_functions
 import socketpool
 
@@ -43,6 +43,11 @@ pool = socketpool.SocketPool(wifi.radio)
 
 ## default path for static files is /html
 server = Server(pool, "/html", debug=True)
+server.headers = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "*",
+    "Access-Control-Allow-Headers": "*",
+}
 
 ## set up neopixel
 pixel_pin = board.GP10
@@ -69,6 +74,9 @@ def pattern(request: Request, animation_name: str):
     animation_spec = json.loads(request.body)
     print("animation spec: %s" % animation_spec)
 
+@server.route("/leds/....", OPTIONS)
+def options(request: Request):
+    return Response(request, "Allowed methods: OPTIONS, GET, POST", content_type="application/json", headers=Headers({"Allow": "OPTIONS, GET, POST"}))
 
 # Run currently chosen LED animation, looping forever
 async def run_animate():
