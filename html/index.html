@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>LED Blink Fill</title>
+</head>
+<body>
+  <button onclick="sendRequestBlink([255,0,0], 1)">Blink Fill RED</button>
+  <button onclick="sendRequestBlink([255,0,255], 1)">Blink Fill PURPLE</button>
+  <button onclick="sendRequestClear()">Clear</button>
+
+  <script>
+    function sendRequestBlink(color, speed) {
+      fetch('/leds/animate/blink_fill', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ color, speed })
+      });
+    }
+
+    function sendRequestClear() {
+      fetch('/leds/animate/none', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: "{}"
+      });
+    }
+  </script>
+</body>
+</html>
