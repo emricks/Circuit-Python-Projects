@@ -1,5 +1,6 @@
 import asyncio
 import json
+import time
 
 import board
 import neopixel
@@ -14,7 +15,7 @@ import animate_functions
 import socketpool
 
 hostname = "leds1"
-http_port = 8080
+http_port = 80
 animation = "none"
 animation_spec = {}
 
@@ -35,6 +36,7 @@ while not connected:
             connected = True
     except:
         print("Failed to connect to wifi, retrying")
+        time.sleep(1)
 
 print("my IP addr:", wifi.radio.ipv4_address)
 
@@ -51,7 +53,7 @@ server.headers = {
 
 ## set up neopixel
 pixel_pin = board.GP10
-num_pixels = 166
+num_pixels = int(os.getenv('NUM_PIXELS'))
 pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.3, auto_write=False)
 
 ########################
