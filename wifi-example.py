@@ -54,7 +54,7 @@ server.headers = {
 ## set up neopixel
 pixel_pin = board.GP10
 num_pixels = int(os.getenv('NUM_PIXELS'))
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.3, auto_write=False)
+pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.2, auto_write=False)
 
 ########################
 #### main functions ####
@@ -87,6 +87,10 @@ async def run_animate():
             await animate_functions.blank(pixels)
         elif animation == "blink_fill":
             await animate_functions.blink_fill(pixels, animation_spec)
+        elif animation == "solid_fill":
+            await animate_functions.solid_fill(pixels, animation_spec)
+        elif animation == "bar":
+            await animate_functions.slayer(pixels, animation_spec)
         await asyncio.sleep(0)
 
 # launch both the animation and the web server, async

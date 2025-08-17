@@ -2,23 +2,41 @@
 <html>
 <head>
   <title>LED Blink Fill</title>
+  <style rel="stylesheet" itemref="style.css"></style>
 </head>
 <body>
-  <label for="r">Red:</label>
-  <input type="number" id="r" placeholder="Red (0-255)" min="0" max="255" value="255"><br><br>
-
-  <label for="g">Green:</label>
-  <input type="number" id="g" placeholder="Green (0-255)" min="0" max="255" value="0"><br><br>
-
-  <label for="b">Blue:</label>
-  <input type="number" id="b" placeholder="Blue (0-255)" min="0" max="255" value="255"><br><br>
-
-  <label for="speed">Speed:</label>
-  <input type="number" id="speed" placeholder="Speed (e.g. 0.1)" step="0.01" value="1"><br><br>
-
-  <button onclick="sendRequestBlink()">Blink Fill</button>
-  <button onclick="sendRequestClear()">Clear</button>
+  <h1 id="txt">Slayer Mode</h1>
 
   <script src="script.js"></script>
+
+  <label for="r">Red:</label>
+  <input type="number" class="color" id="r" placeholder="Red (0-255)" min="0" max="255" display="none"><br><br>
+
+  <label for="g">Green:</label>
+  <input type="number" class="color" id="g" placeholder="Green (0-255)" min="0" max="255" display="none"><br><br>
+
+  <label for="b">Blue:</label>
+  <input type="number" class="color" id="b" placeholder="Blue (0-255)" min="0" max="255" display="none"><br><br>
+
+  <label for="xpgoal">EXP Goal:</label>
+  <input type="number" id="xpgoal" placeholder="Slayer experience goal" display="none"><br><br>
+
+  <label for="currentxp">Current EXP:</label>
+  <input type="number" id="currentxp" placeholder="Current slayer experience" display="none"><br><br>
+
+  <label fo="aatrox">Is Aatrox mayor?</label>
+  <input type="checkbox" id="aatrox" display="none"><br><br>
+
+  <label for="bosstier">Tier of boss:</label>
+  <input type="number" id="bosstier" placeholder="Number 1-5" min="1" max="5" step="1" display="none"><br><br>
+
+  <button onclick="sendRequestBlink()" style="display: none">Blink Fill</button>
+  <button onclick="sendRequestClear()" style="display: none">Clear</button>
+  <button onclick="sendRequestSolid()" style="display: none">Solid</button>
+
+  <button onclick="setup()" id="acceptColor">Accept</button>
+  <button onclick="addBoss()">Boss Completed</button>
+
+  <h3 id="xpdisplay"></h3>
 </body>
 </html>
